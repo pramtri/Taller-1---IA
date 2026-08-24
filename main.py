@@ -281,5 +281,6 @@ if __name__ == "__main__":
     """
     The main function is called when main.py is run from the command line.
     """
+
     args = readCommand(sys.argv[1:])
     runMission(**args)
