@@ -291,7 +291,31 @@ class ModuleRepairProblem(SearchProblem):
         self._expanded += 1
         # TODO: Add your code here
 
+        pos_actual, recogio = state
+
+        #Para cada posible dirección de movimiento norte=(1,0), sur(-1,0), este(1,0) y oeste(-1,0)
+
+        for direction in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+            x, y = pos_actual
+            dx, dy = Actions.directionToVector(direction) #aumento en x y y dada la dirección
+            nextx, nexty = int(x + dx), int(y + dy) #mueve en robot en esa dirección
+        
+            if not self.walls[nextx][nexty]: #si no hay una pared
+                nextPosition = (nextx, nexty) #se mueve
+
+                #calcula el costo de ese paso, teniendo en cuenta si ya recogió a M
+                costo = self._getStepCost(nextPosition, recogio) 
+
+                #el costo es el normal si el robot entra a M, verdadero si la siguiente es M o si ya tiene a M
+                sig_recoge_modulo = (recogio or nextPosition == self.modulePosition)
+
+                sig_paso = (nextPosition, sig_recoge_modulo)
+
+                tupla = (sig_paso, direction, costo)
+                successors.append(tupla)
+
         return successors
+    
 
     def getCostOfActions(self, actions):
         """
