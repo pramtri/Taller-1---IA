@@ -78,7 +78,7 @@ def uniformCostSearch(problem: SearchProblem):
         #Tomar los datos del primer elemento en la cola y quitarlo
         estado, acciones, costo_acciones = cola_prioridad.pop()
 
-        #Si el costo actual es menor que infinito, continua (es cierto siempre para )
+        #Si el costo actual es menor que infinito (el infinito se va actuslizando en cada iteración)
         if not costo_acciones > menor_costo.get(estado, float("inf")):
 
             #Si se llegó al nodo objetivo, se retorna el camino
