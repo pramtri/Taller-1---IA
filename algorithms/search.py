@@ -63,7 +63,39 @@ def uniformCostSearch(problem: SearchProblem):
     """
 
     # TODO: Add your code here
-    utils.raiseNotDefined()
+
+    cola_prioridad = utils.PriorityQueue()
+
+    #Diccionario donde se va almacenando el costo del camino más corto a cada nodo (nodo:costo)
+    inicio = problem.getStartState()
+    menor_costo = {inicio: 0}
+
+    #Ingresar el primer nodo en la cola
+    cola_prioridad.push((inicio,[],0), 0)
+
+    while not cola_prioridad.isEmpty():
+
+        #Tomar los datos del primer elemento en la cola y quitarlo
+        estado, acciones, costo_acciones = cola_prioridad.pop()
+
+        #Si el costo actual es menor que infinito, continua (es cierto siempre para )
+        if not costo_acciones > menor_costo.get(estado, float("inf")):
+
+            #Si se llegó al nodo objetivo, se retorna el camino
+            if problem.isGoalState(estado):
+                return acciones
+
+            #Se revisan los sucesores del nodo actual y se miran los costos de ir hacia ellos
+            for sucesor, accion, costoSig in problem.getSuccessors(estado):
+                nuevo_costo = costo_acciones + costoSig
+
+                #Si el nuevo costo es menor al menor costo almacenado, se actualiza
+                if nuevo_costo < menor_costo.get(sucesor, float("inf")):
+                    menor_costo[sucesor] = nuevo_costo
+                    nuevas_acciones = acciones + [accion] #se añaden las nuevas acciones
+                    cola_prioridad.push((sucesor, nuevas_acciones, nuevo_costo),nuevo_costo)
+
+    return []
 
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
