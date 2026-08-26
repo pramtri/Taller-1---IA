@@ -252,7 +252,19 @@ class ModuleRepairProblem(SearchProblem):
 
         """
         # TODO: Add your code here
-        utils.raiseNotDefined()
+
+        x_sig = nextPosition[0]
+        y_sig = nextPosition[1]
+
+        #Costo normal de la siguiente celda
+        costo = self.startingMissionState.getTerrainCost(x_sig, y_sig)
+
+        #Si ya se tiene el módulo M, el costo se duplica
+        if hasModule:
+            return costo * 2
+        else:
+            return costo
+
 
     def getSuccessors(self, state):
         """
