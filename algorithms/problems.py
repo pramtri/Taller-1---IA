@@ -235,7 +235,16 @@ class ModuleRepairProblem(SearchProblem):
         Returns True if the robot reached C after picking up M.
         """
         # TODO: Add your code here
-        utils.raiseNotDefined()
+
+        posicion_C = self.controlPosition
+
+        pos_actual, recogio = state
+
+        if recogio and pos_actual == posicion_C:
+            return True
+
+        else:
+            return False
 
     def _getStepCost(self, nextPosition, hasModule):
         """
