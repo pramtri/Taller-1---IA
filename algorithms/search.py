@@ -53,8 +53,23 @@ def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    start = problem.getStartState()
+    frontier = utils.Queue()
+    #agregar el estado inicial a la frontera. La lista de acciones es vacia
+    frontier.push((start, []))
+    #estados visitados
+    visited = {start}
+
+    while not frontier.isEmpty():
+        state, actions = frontier.pop()
+        if problem.isGoalState(state):
+            return actions
+        for successor, action, _ in problem.getSuccessors(state):
+            #Se agregan los sucesores a la frontera con las acciones correspondientes
+            if successor not in visited:
+                visited.add(successor)
+                frontier.push((successor, actions + [action]))
+    return []
 
 
 def uniformCostSearch(problem: SearchProblem):
