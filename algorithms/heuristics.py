@@ -21,8 +21,20 @@ def manhattanHeuristic(state, problem):
     - the nearest pending T if the robot has the kit and systems remain.
     - C if all systems have been repaired.
     """
-    # TODO: Add your code here
-    utils.raiseNotDefined()
+    posicion, tieneKit, sistemasPendientes = state
+
+    if not tieneKit:
+        objetivo = problem.kitPosition
+    elif sistemasPendientes:
+        # Se toma el T pendiente mas cercano en distancia Manhattan
+        objetivo = min(
+            sistemasPendientes,
+            key=lambda t: abs(posicion[0] - t[0]) + abs(posicion[1] - t[1]),
+        )
+    else:
+        objetivo = problem.controlPosition
+
+    return abs(posicion[0] - objetivo[0]) + abs(posicion[1] - objetivo[1])
 
 
 def euclideanHeuristic(state, problem):
