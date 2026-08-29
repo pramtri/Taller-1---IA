@@ -70,13 +70,24 @@ def systemRepairHeuristic(
     """
     #state = (position, hasKit, pendingSystems)
     position, hasKit, pendingSystems = state
+
     if hasKit:
         points = [position] + list(pendingSystems) + [problem.controlPosition]
-        return MST(points)
+        key = ("mst", tuple(sorted(points)))
+        if key not in problem.heuristicInfo:
+            problem.heuristicInfo[key] = MST(points)
+
+        return problem.heuristicInfo[key]
+    
     else:
         distancia_kit = distancia(position, problem.kitPosition)
         points = [problem.kitPosition] + list(pendingSystems) + [problem.controlPosition]
-        return distancia_kit + MST(points)
+        key = ("mst", tuple(sorted(points)))
+
+        if key not in problem.heuristicInfo:
+            problem.heuristicInfo[key] = MST(points)
+
+        return distancia_kit + problem.heuristicInfo[key]
         
             
 
