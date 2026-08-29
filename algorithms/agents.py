@@ -88,7 +88,7 @@ class SearchAgent(Agent):
         self.searchTime = elapsed
         if not self.deferOutput:
             print(
-                "Path found with total cost of %d in %.1f seconds"
+                "Path found with total cost of %d in %.3f seconds"
                 % (totalCost, elapsed)
             )
         if "_expanded" in dir(problem):
