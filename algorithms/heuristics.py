@@ -48,7 +48,37 @@ def euclideanHeuristic(state, problem):
     - C if all systems have been repaired.
     """
     # TODO: Add your code here
-    utils.raiseNotDefined()
+
+    pos, tieneKit, sistemasPend = state
+
+    x, y = pos
+
+    # Si no tiene kit va a K
+    if not tieneKit:
+        x2, y2 = problem.kitPosition
+        objetivo = distanciaEuclidiana(x, x2, y, y2)
+
+    #Si hay sistemas pendientes T va a ellos
+    elif sistemasPend:
+        distancias = []
+
+        for x2, y2 in sistemasPend:
+            distancia = distanciaEuclidiana(x, x2, y, y2)
+            distancias.append(distancia)
+
+        objetivo = min(distancias)
+
+    #Sino se va a C
+    else:
+        x2, y2 = problem.controlPosition
+        objetivo = distanciaEuclidiana(x, x2, y, y2)
+
+    return objetivo
+
+def distanciaEuclidiana(x1, x2, y1, y2):
+
+    return ((x1 - x2)**2 + (y1 - y2)**2)**0.5
+
 
 
 def systemRepairHeuristic(
